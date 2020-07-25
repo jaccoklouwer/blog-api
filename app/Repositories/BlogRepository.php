@@ -32,10 +32,10 @@ class BlogRepository implements RepositoryContract
     {
 
         return Blog::create([
-            'title' => $blog->getTitle(),
-            'slug' => $blog->getSlug(),
-            'summary' => $blog->getSummary(),
-            'content' => $blog->getContent()
+            'title' => $blog->title,
+            'slug' => $blog->slug,
+            'summary' => $blog->summary,
+            'content' => $blog->content
         ]);
     }
 

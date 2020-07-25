@@ -66,14 +66,14 @@ class BlogController extends Controller
 
         try {
             $blog = new Blog();
-            $blog->setTitle($attributes['title']);
+            $blog->title = $attributes['title'];
             $blog->setSlug();
-            $blog->setSummary($attributes['summary']);
-            $blog->setContent($attributes['content']);
+            $blog->summary = $attributes['summary'];
+            $blog->content = $attributes['content'];
 
             $this->repository->create($blog);
 
-            return response("succes", 201);
+            return response(['status' => 'success'], 200);
 
         } catch (Exception $e) {
             return response([
@@ -91,7 +91,11 @@ class BlogController extends Controller
      */
     public function show($id)
     {
-        return $this->repository->getById($id);
+        $blog = $this->repository->getById($id);
+        if($blog){
+            return response($blog, 200);
+        }
+        return \response(['message' => "no_blogs_found"], 404);
     }
 
     /**
@@ -115,7 +119,7 @@ class BlogController extends Controller
 
         try {
             $this->repository->update($blog, $attributes);
-            return response('succes', 200);
+            return response(['status' => 'success'], 200);
         } catch (Exception $e) {
             return response(["message" => $e->getMessage(), 'error' => $e->getLine()], 400);
         }
@@ -130,9 +134,9 @@ class BlogController extends Controller
     public function destroy($id)
     {
         try {
-            $result = $this->repository->delete($id);
-            dd($result);
-            return response('succes', 200);
+            $this->repository->delete($id);
+
+            return response(['status' => 'success'], 200);
         } catch (Exception $e) {
             return response([
                 "message" => "something went wrong!",
