@@ -13,8 +13,14 @@ class UserRepository
     {
         return User::create([
             'name' => $request->get('name'),
-            'email' => $request->get('email'),
             'password' => Hash::make($request->get('password')),
         ]);
     }
+
+    public function getUser($credentials)
+    {
+        $user = User::all()->where('name', $credentials['name'])->first();
+        return Hash::check($credentials['password'], $user['password']);
+    }
+
 }

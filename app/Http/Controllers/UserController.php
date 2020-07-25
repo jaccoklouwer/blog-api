@@ -16,7 +16,7 @@ use Tymon\JWTAuth\Facades\JWTAuth;
 class UserController extends Controller
 {
     /** @var UserRepository */
-    private UserRepository $repository;
+    private $repository;
 
     /**
      * UserController constructor.
@@ -34,9 +34,13 @@ class UserController extends Controller
      */
     public function authenticate(Request $request)
     {
-        $credentials = $request->only('email', 'password');
+        $credentials = $request->only('name', 'password');
+        $user = $this->repository->getUser($credentials);
 
         try {
+            if (!$user){
+                return response()->json(['error' => 'user_not_found'], 404);
+            }
             if (!$token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 400);
             }
@@ -55,19 +59,14 @@ class UserController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'email' => 'required|string|email|max:255|unique:users',
-            'password' => 'required|string|min:6|confirmed',
+            'password' => 'required|string|min:6',
         ]);
 
         if ($validator->fails()) {
-            return response()->json($validator->errors()->toJson(), 400);
+            return response()->json($validator->errors(), 400);
         }
 
-        $user = User::create([
-            'name' => $request->get('name'),
-            'email' => $request->get('email'),
-            'password' => Hash::make($request->get('password')),
-        ]);
+        $user = $this->repository->create($request);
 
         $token = JWTAuth::fromUser($user);
 

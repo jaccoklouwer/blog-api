@@ -19,10 +19,7 @@ class CreateBlogsTable extends Migration
             $table->string('slug')->unique();
             $table->text('summary');
             $table->text('content');
-            $table->unsignedBigInteger('user_id');
             $table->timestamps();
-
-            $table->foreign('user_id')->references('id')->on('users');
         });
     }
 

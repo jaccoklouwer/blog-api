@@ -17,10 +17,11 @@ use Illuminate\Support\Facades\Route;
 Route::post('register', 'UserController@register');
 Route::post('login', 'UserController@authenticate');
 
+Route::get('blogs', 'BlogController@index');
+Route::get('blogs/{blog}', 'BlogController@show');
+
 Route::group(['middleware' => 'jwt.verify'], function (){
-    Route::get('blogs', 'BlogController@index');
-    Route::get('blogs/{blog}', 'BlogController@show');
     Route::post('blogs', 'BlogController@store');
     Route::put('blogs/{blog}', 'BlogController@update');
-    Route::delete('blogs/{blog}', 'BlogController@update');
+    Route::delete('blogs/{blog}', 'BlogController@destroy');
 });

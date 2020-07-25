@@ -3,18 +3,20 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Blog extends Model
 {
+    /** @var array  */
     protected $guarded = [];
 
-    public function author()
+
+    /**
+     *
+     */
+    public function setSlug()
     {
-        return $this->belongsTo(User::class)
+        $this->slug = str_replace(' ', '-', $this->title);
     }
 
-    public function slug()
-    {
-        return str_replace(' ', '-', $this->title);
-    }
 }
