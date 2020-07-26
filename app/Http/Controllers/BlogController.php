@@ -41,7 +41,7 @@ class BlogController extends Controller
                 ];
             }
 
-            return \response(['message' => 'succes', 'data' => $data], 200);
+            return response(['message' => 'succes', 'data' => $data], 200);
         } catch (Exception $e) {
             return response([
                 "message" => "something went wrong!",
@@ -73,7 +73,7 @@ class BlogController extends Controller
 
             $this->repository->create($blog);
 
-            return response(['status' => 'success'], 200);
+            return response(['status' => 'success'], 201);
 
         } catch (Exception $e) {
             return response([
@@ -95,7 +95,7 @@ class BlogController extends Controller
         if($blog){
             return response($blog, 200);
         }
-        return \response(['message' => "no_blogs_found"], 404);
+        return response(['message' => "no_blogs_found"], 404);
     }
 
     /**
