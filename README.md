@@ -1,3 +1,14 @@
+# Blog API
+
+## Introduction
+Deze API is gemaakt in opdracht van [Voclarion](https://voclarion.nl/). Het gaat hierbij om een simpele API waar blogs gemaakt, gelezen, gewijzigt en verwijderd kunnen worden.
+Hierbij moet een gebruiker aangemaakt worden om een blog te maken, te wijzigen of te verwijderen.
+
+## Usage
+alle API endpoints zijn te gebruiken via de url [http://localhost:8000/api/blogs](). De endpoints voor de gebruiker zijn [http://localhost:8000/api/register]() en [http://localhost:8000/api/login](). 
+
+Om de server te starten, moet het commando ````php artisan serve```` worden ingevoerd in de root-map.
+
 <p align="center"><img src="https://res.cloudinary.com/dtfbvvkyp/image/upload/v1566331377/laravel-logolockup-cmyk-red.svg" width="400"></p>
 
 <p align="center">
